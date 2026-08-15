@@ -1,4 +1,6 @@
-.PHONY: test dash_test bash_test gosh_test clean
+.PHONY: test dash_test bash_test gosh_test treesitter_test clean
+
+PYTHON ?= python3
 
 dash_test:
 	@find libdash_tests/tests libdash_tests/pash_tests -type f | while read f; do libdash_tests/round_trip.sh ./rt.py "$$f"; done | tee python.log
@@ -14,7 +16,10 @@ gosh_test:
 	@cat python.log | egrep '^[A-Z0-9_]+:' | cut -d ':' -f 1 | sort | uniq -c
 	@grep ':' python.log && echo "FAILED" && exit 1 || exit 0
 
-test: dash_test bash_test gosh_test
+treesitter_test:
+	@$(PYTHON) ./treesitter_rt.py
+
+test: dash_test bash_test treesitter_test
 
 clean:
 	rm -rf $(wildcard *.log) libdash_tests

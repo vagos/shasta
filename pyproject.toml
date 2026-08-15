@@ -17,6 +17,10 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = ["libbash", "libdash"]
+treesitter = [
+    "tree-sitter>=0.25; python_version >= '3.10'",
+    "tree-sitter-bash>=0.25; python_version >= '3.10'",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/binpash/shasta"
